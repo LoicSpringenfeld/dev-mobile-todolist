@@ -1,0 +1,17 @@
+<ActionBar title="todo.title --> dynamic">
+    <ActionItem android.systemIcon="ic_input_add" ios.systemIcon="4" ios.position="actionBar"
+        android.position="actionBar" (tap)="showModalNew()"></ActionItem>
+</ActionBar>
+
+<GridLayout>
+    <ListView [items]="todo['todoItem']">
+        <ng-template let-todoItem="item" let-i="index">
+            <GridLayout>
+                <Label [text]="todoItem.title" background="green"></Label>
+            </GridLayout>
+            <!--<GridLayout columns="auto, *, auto">
+                <Label height="50" textAlignment="center" [text]="i + '/' + todoItem.id + ' ' + todoItem.title" col="1" background="green"></Label>
+            </GridLayout>-->
+        </ng-template>
+    </ListView>
+</GridLayout>

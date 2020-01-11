@@ -1,0 +1,17 @@
+<ActionBar title="Todo List">
+    <ActionItem android.systemIcon="ic_input_add" ios.systemIcon="4" ios.position="actionBar"
+        android.position="actionBar" (tap)="showModalNew()"></ActionItem>
+</ActionBar>
+
+<GridLayout>
+    <ListView [items]="todos">
+        <ng-template let-todo="item" let-i="index">
+            <GridLayout columns="auto, *, auto">
+                <Image height="50" src="~/app/images/delete.png" col="0" background="pink" (tap)="showModalDelete(todo)"></Image>
+                <Label height="50" textAlignment="center" [text]="i + '/' + todo.id + ' ' + todo.title" col="1" background="green" [nsRouterLink]="['/todo', todo.id]"></Label>
+                <Image height="50" src="~/app/images/edit.png" col="2" background="yellow" (tap)="showModalEdit(todo)"></Image>
+            </GridLayout>
+        </ng-template>
+    </ListView>
+</GridLayout>
+
