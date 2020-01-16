@@ -1,0 +1,32 @@
+<!--
+<GridLayout width="400" class="modal">
+    <StackLayout class="p-10">
+        <Label class="h2 text-center" text="Ajouter une check-list" textWrap="true"></Label>
+        <Label *ngIf="modif" text="Modification Todo" textWrap="true" verticalAlignment="center" class="p-15"></Label>
+        <Label *ngIf="nouveau" text="Nouvelle Todo" textWrap="true" verticalAlignment="center" class="p-15"></Label>
+        <TextField  hint="Nomms de la check-list" [(ngModel)]="nameTodo" class="input input-border"></TextField>
+        <TextField  hint="Description" [(ngModel)]="descTodo" class="input input-border"></TextField>
+        <StackLayout orientation="horizontal" horizontalAlignment="center">
+            <Button text="Annuler" (tap)="close()" ></Button>
+            <button class="button-one">Tap Me</button>
+            <Button *ngIf="nouveau" text="Ajouter" (tap)="addTodo()" ></Button>
+            <Button *ngIf="modif" text="Suprimmer" (tap)="deleteTodo()" ></Button>
+            <Button *ngIf="modif" text="Sauvegarder" (tap)="addTodo(modif)" ></Button>
+        </StackLayout>
+    </StackLayout>
+</GridLayout>
+-->
+
+
+<StackLayout margin="30">
+    <Label text="Ajouter une tâche" style="font-weight: bold"></Label>
+    <Label text="Titre"></Label>
+    <Label *ngIf="titleIsNull" text="Titre obligatoire !" color="red"></Label>
+    <TextField hint="Entrer le titre de la tâche" [(ngModel)]="title"></TextField>
+    <Label text="Date de fin"></Label>
+    <Label *ngIf="endDateIsNull" text="Date de fin obligatoire !" color="red"></Label>
+    <DatePickerField hint="Entrer la date de fin" [(ngModel)]="endDate"></DatePickerField>
+    <Label text="Catégorie"></Label>
+    <ListPicker [items]="categories" selectedIndex="0" (selectedIndexChange)="onSelectedIndexChanged($event)" [(ngModel)]="category"></ListPicker>
+    <Button text="Valider" (tap)="addTodoItem()"></Button>
+</StackLayout>

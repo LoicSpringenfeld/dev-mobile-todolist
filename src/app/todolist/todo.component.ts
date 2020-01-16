@@ -14,7 +14,7 @@ export class TodoComponent implements OnInit {
 
     ngOnInit(): void {
         this.localStorage = new LocalStorage();
-        this.localStorage.removeAll();
+        //this.localStorage.removeAll();
         this.refreshListView();
     }
 

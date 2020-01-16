@@ -1,17 +1,20 @@
-<ActionBar title="todo.title --> dynamic">
+<ActionBar>
+    <NavigationButton (tap)="back()" android.systemIcon="ic_menu_back"></NavigationButton>
     <ActionItem android.systemIcon="ic_input_add" ios.systemIcon="4" ios.position="actionBar"
         android.position="actionBar" (tap)="showModalNew()"></ActionItem>
+    <StackLayout>
+        <Label [text]="todo.title" class="h2" id="titleTodo"></Label>
+    </StackLayout>
 </ActionBar>
 
 <GridLayout>
     <ListView [items]="todo['todoItem']">
         <ng-template let-todoItem="item" let-i="index">
-            <GridLayout>
-                <Label [text]="todoItem.title" background="green"></Label>
-            </GridLayout>
-            <!--<GridLayout columns="auto, *, auto">
-                <Label height="50" textAlignment="center" [text]="i + '/' + todoItem.id + ' ' + todoItem.title" col="1" background="green"></Label>
-            </GridLayout>-->
+            <StackLayout orientation="vertical" (longPress)="showModalDelete(todoItem)">
+                <Label [text]="'Tâche : ' + todoItem.title" style="font-weight: bold"></Label>
+                <label [text]="'Date de fin : ' + todoItem.endDate"></label>
+                <label [text]="'Catégorie : ' + todoItem.category"></label>
+            </StackLayout>
         </ng-template>
     </ListView>
 </GridLayout>

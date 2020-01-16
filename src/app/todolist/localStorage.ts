@@ -62,13 +62,58 @@ export class LocalStorage {
         return todo;
     }
 
-    addTodoItem(todoId: number/*, title: string, endDate: Date, category: string*/) {
+    addTodoItem(todoId: number, title: string, endDate: Date, category: string) {
         var todos = this.getTodos();
         var todo = this.getTodo(todoId);
         //console.log(todo["todoItem"]);
-        todo["todoItem"].push(new TodoItem(0, "title", "category", new Date(), false));
+        var nextId = this.getTodoItemNextId();
+        console.log(nextId);
+        todo["todoItem"].push(new TodoItem(nextId, title, category, endDate, false));
+        ApplicationSettings.setNumber("todoItemCurrentId", nextId);
         todos[this.getTodoPosition(todoId)] = todo;
         //console.log("-----------------" + todos[this.getTodoPosition(todoId)]["todoItem"][0]["endDate"]);
+        this.setTodos(todos);
+    }
+
+    getTodoItemNextId(): number {
+        var currentId = ApplicationSettings.getNumber("todoItemCurrentId");
+        console.log();
+        if (currentId == null) {
+            ApplicationSettings.setNumber("todoItemCurrentId", 0);
+            return currentId = 0;
+        } else {
+            return currentId + 1;
+        }
+    }
+
+    getTodoItemPosition(todo: Todo, todoItemid: number): number {
+        var position;
+        for (var i in todo["todoItem"]) {
+            if (todoItemid == todo["todoItem"][i]["id"]) {
+                position = i;
+            }
+        }
+        return position;
+    }
+
+    getTodoItem(todo: Todo, todoItemId: number): TodoItem {
+        var todoItem = todo["todoItem"][this.getTodoItemPosition(todo, todoItemId)];
+        console.log(todoItem["title"]);
+        return todoItem;
+    }
+
+    removeTodoItem(todoId: number, todoItemId: number) {
+        var todo = this.getTodo(todoId);
+        todo["todoItem"].splice(this.getTodoItemPosition(todo, todoItemId), 1);
+        this.setTodo(todo["id"], todo);
+        /*var todos = this.getTodos();
+        todos[this.getTodoPosition(todo["id"])] = todo;
+        this.setTodos(todos);*/
+    }
+
+    setTodo(id: number, todo: Todo) {
+        var todos = this.getTodos();
+        todos[this.getTodoPosition(id)] = todo;
         this.setTodos(todos);
     }
 
@@ -76,28 +121,4 @@ export class LocalStorage {
     removeAll() {
         ApplicationSettings.clear();
     }
-
-
-
-    /*getTodo(id: number): Todo {
-        return
-    }
-
-
-    public static set todos(todo: Array<Todo>) {
-        ApplicationSettings.setString("todos", JSON.stringify(todo));
-    }
-
-    public static get todos(): Array<Todo> {
-
-    }
-
-    public static set categories(category: string) {
-        ApplicationSettings.setString("categories", JSON.stringify(category));
-    }
-
-    public static get categories(): string {
-        var categories = ApplicationSettings.getString("categories");
-        return categories == null ? new String() : JSON.parse(categories);
-    }*/
 }

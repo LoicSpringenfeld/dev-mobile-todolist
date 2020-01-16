@@ -3,10 +3,11 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { ItemsComponent } from "./item/items.component";
-import { ItemDetailComponent } from "./item/item-detail.component";
 import { TodoComponent } from "./todolist/todo.component";
 import { TodoItemComponent } from "./todolist/todoItem.component";
+import { ModalTodoItemComponent } from "./todolist/modalTodoItem.component";
+import { NativeScriptDateTimePickerModule } from "nativescript-datetimepicker/angular";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -20,18 +21,22 @@ import { TodoItemComponent } from "./todolist/todoItem.component";
     ],
     imports: [
         NativeScriptModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NativeScriptDateTimePickerModule,
+        NativeScriptFormsModule
     ],
     declarations: [
         AppComponent,
-        ItemsComponent,
-        ItemDetailComponent,
         TodoComponent,
-        TodoItemComponent
+        TodoItemComponent,
+        ModalTodoItemComponent
     ],
     providers: [],
     schemas: [
         NO_ERRORS_SCHEMA
+    ],
+    entryComponents: [
+        ModalTodoItemComponent
     ]
 })
 /*
