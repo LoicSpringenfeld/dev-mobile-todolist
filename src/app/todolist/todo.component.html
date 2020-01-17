@@ -7,9 +7,9 @@
     <ListView [items]="todos">
         <ng-template let-todo="item" let-i="index">
             <GridLayout columns="auto, *, auto">
-                <Image height="50" src="~/app/images/delete.png" col="0" (tap)="showModalDelete(todo)"></Image>
-                <Label height="50" textAlignment="center" [text]="todo.title" col="1" [nsRouterLink]="['/todo', todo.id]"></Label>
-                <Image height="50" src="~/app/images/edit.png" col="2" (tap)="showModalEdit(todo)"></Image>
+                <Image height="35" src="~/app/images/delete.png" col="0" (tap)="showModalDelete(todo)"></Image>
+                <Label textAlignment="center" [text]="todo.title" col="1" [nsRouterLink]="['/todo', todo.id]"></Label>
+                <Image height="35" src="~/app/images/edit.png" col="2" (tap)="showModalEdit(todo)"></Image>
             </GridLayout>
         </ng-template>
     </ListView>

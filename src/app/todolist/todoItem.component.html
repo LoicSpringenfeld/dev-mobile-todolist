@@ -7,14 +7,33 @@
     </StackLayout>
 </ActionBar>
 
-<GridLayout>
-    <ListView [items]="todo['todoItem']">
-        <ng-template let-todoItem="item" let-i="index">
-            <StackLayout orientation="vertical" (longPress)="showModalDelete(todoItem)">
-                <Label [text]="'Tâche : ' + todoItem.title" style="font-weight: bold"></Label>
-                <label [text]="'Date de fin : ' + todoItem.endDate"></label>
-                <label [text]="'Catégorie : ' + todoItem.category"></label>
-            </StackLayout>
-        </ng-template>
-    </ListView>
-</GridLayout>
+<TabView selectedIndex="0">
+    <StackLayout *tabItem="{title: 'Tâches à faire'}">
+        <GridLayout>
+            <ListView [items]="todoItemNotComplete">
+                <ng-template let-todoItem="item" let-i="index">
+                    <StackLayout orientation="vertical" (longPress)="showModalDelete(todoItem)" (tap)="changeStatTodoItem(todoItem)">
+                        <Label [text]="'Tâche : ' + todoItem.title" style="font-weight: bold"></Label>
+                        <Label [text]="'Date de fin : ' + todoItem.endDate"></Label>
+                        <Label [text]="'Catégorie : ' + todoItem.category"></Label>
+                    </StackLayout>
+                </ng-template>
+            </ListView>
+        </GridLayout>
+    </StackLayout>
+    <StackLayout *tabItem="{title: 'Tâches terminées'}">
+        <StackLayout>
+            <GridLayout>
+                <ListView [items]="todoItemComplete">
+                    <ng-template let-todoItem="item" let-i="index">
+                        <StackLayout orientation="vertical" (longPress)="showModalDelete(todoItem)" (tap)="changeStatTodoItem(todoItem)">
+                            <Label [text]="'Tâche : ' + todoItem.title" style="font-weight: bold"></Label>
+                            <Label [text]="'Date de fin : ' + todoItem.endDate"></Label>
+                            <Label [text]="'Catégorie : ' + todoItem.category"></Label>
+                        </StackLayout>
+                    </ng-template>
+                </ListView>
+            </GridLayout>
+        </StackLayout>
+    </StackLayout>
+</TabView>

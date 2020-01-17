@@ -3,7 +3,6 @@ export class TodoItem {
     title: string;
     category: string;
     endDate: Date;
-    //Utile ?
     isComplete: boolean;
 
     constructor(id: number, title: string, category: string, endDate: Date, isComplete: boolean) {
@@ -11,7 +10,7 @@ export class TodoItem {
         this.title = title;
         this.category = category;
         this.endDate = endDate;
-        this.isComplete = this.isComplete;
+        this.isComplete = isComplete;
     }
 
     public get getId(): number {

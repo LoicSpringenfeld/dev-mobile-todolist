@@ -17,6 +17,8 @@ import { RouterExtensions } from 'nativescript-angular/router';
 export class TodoItemComponent implements OnInit {
     localStorage: LocalStorage;
     todo: Todo;
+    todoItemComplete: Array<TodoItem>;
+    todoItemNotComplete: Array<TodoItem>;
 
     constructor(private route: ActivatedRoute, private modalService: ModalDialogService, private viewContainerRef: ViewContainerRef, private router : RouterExtensions) {}
 
@@ -27,6 +29,8 @@ export class TodoItemComponent implements OnInit {
 
     refreshListView() {
         this.todo = this.localStorage.getTodo(+this.route.snapshot.params.id);
+        this.todoItemComplete = this.localStorage.getTodoItemComplete(+this.route.snapshot.params.id);
+        this.todoItemNotComplete = this.localStorage.getTodoItemNotComplete(+this.route.snapshot.params.id);
     }
 
     back() {
@@ -34,21 +38,6 @@ export class TodoItemComponent implements OnInit {
     }
 
     public showModalNew() {
-        //Créer un dialog custom pour entrer les infos (title, endDate et category)
-        /*this.localStorage.addTodoItem(this.todo["id"]);
-        this.refreshListView();*/
-        /*dialogs.prompt({
-            title: "Nouvelle tâche",
-            message: "Entrez le titre de la nouvelle tâche",
-            okButtonText: "Valider",
-            cancelButtonText: "Annuler",
-            inputType: dialogs.inputType.text
-        }).then(r => {
-            if (r.result && r.text != "") {
-                this.localStorage.addTodoItem(this.todo["id"]);
-                this.refreshListView();
-            }
-        });*/
         const options: ModalDialogOptions = {
             viewContainerRef: this.viewContainerRef,
             fullscreen: false,
@@ -67,8 +56,12 @@ export class TodoItemComponent implements OnInit {
             if(r) {
                 this.localStorage.removeTodoItem(this.todo["id"], todoItem["id"]);
                 this.refreshListView();
-                //this.localStorage.getTodoItem(this.todo, todoItem["id"]);
             }
         })
+    }
+
+    changeStatTodoItem(todoItem: TodoItem) {
+        this.localStorage.changeStatTodoItem(this.todo["id"], todoItem["id"]);
+        this.refreshListView();
     }
 }

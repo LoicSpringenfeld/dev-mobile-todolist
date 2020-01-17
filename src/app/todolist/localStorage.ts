@@ -65,19 +65,15 @@ export class LocalStorage {
     addTodoItem(todoId: number, title: string, endDate: Date, category: string) {
         var todos = this.getTodos();
         var todo = this.getTodo(todoId);
-        //console.log(todo["todoItem"]);
         var nextId = this.getTodoItemNextId();
-        console.log(nextId);
         todo["todoItem"].push(new TodoItem(nextId, title, category, endDate, false));
         ApplicationSettings.setNumber("todoItemCurrentId", nextId);
         todos[this.getTodoPosition(todoId)] = todo;
-        //console.log("-----------------" + todos[this.getTodoPosition(todoId)]["todoItem"][0]["endDate"]);
         this.setTodos(todos);
     }
 
     getTodoItemNextId(): number {
         var currentId = ApplicationSettings.getNumber("todoItemCurrentId");
-        console.log();
         if (currentId == null) {
             ApplicationSettings.setNumber("todoItemCurrentId", 0);
             return currentId = 0;
@@ -96,29 +92,43 @@ export class LocalStorage {
         return position;
     }
 
-    getTodoItem(todo: Todo, todoItemId: number): TodoItem {
-        var todoItem = todo["todoItem"][this.getTodoItemPosition(todo, todoItemId)];
-        console.log(todoItem["title"]);
-        return todoItem;
-    }
-
     removeTodoItem(todoId: number, todoItemId: number) {
         var todo = this.getTodo(todoId);
         todo["todoItem"].splice(this.getTodoItemPosition(todo, todoItemId), 1);
-        this.setTodo(todo["id"], todo);
-        /*var todos = this.getTodos();
-        todos[this.getTodoPosition(todo["id"])] = todo;
-        this.setTodos(todos);*/
+        this.setTodo(todo);
     }
 
-    setTodo(id: number, todo: Todo) {
+    setTodo(todo: Todo) {
         var todos = this.getTodos();
-        todos[this.getTodoPosition(id)] = todo;
+        todos[this.getTodoPosition(todo["id"])] = todo;
         this.setTodos(todos);
     }
 
-    //test
-    removeAll() {
-        ApplicationSettings.clear();
+    changeStatTodoItem(todoId: number, todoItemId: number) {
+        var todo = this.getTodo(todoId);
+        todo["todoItem"][this.getTodoItemPosition(todo, todoItemId)]["isComplete"] = !todo["todoItem"][this.getTodoItemPosition(todo, todoItemId)]["isComplete"];
+        this.setTodo(todo);
+    }
+
+    getTodoItemComplete(todoId: number): Array<TodoItem> {
+        var todo = this.getTodo(todoId);
+        var todoItemComplete = new Array<TodoItem>();
+        for(var i in todo["todoItem"]) {
+            if(todo["todoItem"][i]["isComplete"]) {
+                todoItemComplete.push(todo["todoItem"][i]);
+            }
+        }
+        return todoItemComplete;
+    }
+
+    getTodoItemNotComplete(todoId: number): Array<TodoItem> {
+        var todo = this.getTodo(todoId);
+        var todoItemNotComplete = new Array<TodoItem>();
+        for(var i in todo["todoItem"]) {
+            if(!todo["todoItem"][i]["isComplete"]) {
+                todoItemNotComplete.push(todo["todoItem"][i]);
+            }
+        }
+        return todoItemNotComplete;
     }
 }

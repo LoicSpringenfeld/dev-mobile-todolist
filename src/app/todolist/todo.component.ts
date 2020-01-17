@@ -14,7 +14,6 @@ export class TodoComponent implements OnInit {
 
     ngOnInit(): void {
         this.localStorage = new LocalStorage();
-        //this.localStorage.removeAll();
         this.refreshListView();
     }
 
@@ -24,8 +23,8 @@ export class TodoComponent implements OnInit {
 
     showModalNew() {
         dialogs.prompt({
-            title: "Nouvelle tâche",
-            message: "Entrer le titre de la nouvelle tâche",
+            title: "Nouvelle liste de tâches",
+            message: "Entrer le titre de la nouvelle liste",
             okButtonText: "Valider",
             cancelButtonText: "Annuler",
             inputType: dialogs.inputType.text
